@@ -1,12 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
-import { StatusService } from './status.service';
+import {Controller, Get, Res} from '@nestjs/common';
+import {CarService} from "../car/car.service";
+import {Response} from "express";
 
 @Controller()
 export class StatusController {
-  constructor(private readonly statusService: StatusService) {}
+  constructor(private readonly carService: CarService) {}
 
   @Get("/status")
-  getStatus(): string {
-    return this.statusService.getStatus();
+  getStatus(@Res() response: Response): string {
+    if (this.carService.isReady()) {
+      response.sendStatus(200)
+    } else {
+      response.sendStatus(401);
+    }
+    return "";
   }
 }
