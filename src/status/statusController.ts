@@ -5,7 +5,7 @@ import { StatusService } from './status.service';
 export class StatusController {
   constructor(private readonly statusService: StatusService) {}
 
-  @Get()
+  @Get("/status")
   getStatus(): string {
     return this.statusService.getStatus();
   }

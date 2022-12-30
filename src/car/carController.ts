@@ -5,7 +5,7 @@ import { CarService } from './car.service';
 export class CarController {
   constructor(private readonly carService: CarService) {}
 
-  @Put()
+  @Put("/cars")
   loadCars(): string {
     return this.carService.loadCars();
   }
