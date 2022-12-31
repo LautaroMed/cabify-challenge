@@ -14,15 +14,6 @@ export class CarService {
     this.clearCars();
   }
 
-  clearCars() {
-    this.ready = false;
-    this.cars = {
-      4: [],
-      5: [],
-      6: []
-    }
-  }
-
   loadCars(cars: Car[]): string {
     this.clearCars();
 
@@ -37,4 +28,12 @@ export class CarService {
   isReady(): boolean {
     return this.ready;
   }
+  private clearCars() {
+    this.ready = false;
+    this.cars = {};
+    for (let i = 1; i <= 6; i++) {
+      this.cars[i] = [];
+    }
+  }
+
 }
