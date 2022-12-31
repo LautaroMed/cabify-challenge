@@ -13,9 +13,7 @@ export class CarService {
   loadCars(cars: Car[]): string {
     this.clearCars();
 
-    cars.forEach(car => {
-      this.cars[car.seats] = car;
-    });
+    cars.forEach(car => this.addFreeCar(car));
     this.ready = true;
 
     return 'OK';
@@ -24,6 +22,10 @@ export class CarService {
   isReady(): boolean {
     return this.ready;
   }
+  addFreeCar(car) {
+    this.cars[car.seats].push(car);
+  }
+
   private clearCars() {
     this.ready = false;
     this.cars = {};
