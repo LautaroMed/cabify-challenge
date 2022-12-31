@@ -23,6 +23,15 @@ export class GroupService {
     }
   }
 
+  requestDropOff(groupId: number) {
+    if (groupId in this.travelingGroups) {
+    } else {
+      const index = this.findGroupInQueue(groupId);
+      if (index > -1) {
+        return this.groupQueue.splice(index, 1);
+      }
+    }
+    return null;
   }
 
   // FIXME: throw exception when group is not found
@@ -35,8 +44,6 @@ export class GroupService {
       return undefined;
     }
     return null;
-  requestDropOff(): string {
-    return 'Hello World!';
   }
 
   private findGroupInQueue(groupId: number) : number {

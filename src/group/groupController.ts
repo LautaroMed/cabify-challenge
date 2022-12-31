@@ -20,8 +20,17 @@ export class GroupController {
   }
 
   @Post("/dropoff")
-  requestDropOff(): string {
-    return this.groupService.requestDropOff();
+  requestDropOff(@Body() body, @Res() response: Response): string {
+    if (!body.id) {
+      response.sendStatus(400);
+      return;
+    }
+    const result = this.groupService.requestDropOff(body.id);
+    if (!result) {
+      response.sendStatus(404);
+      return;
+    }
+    response.sendStatus(200);
   }
 
   @Post("/locate")
