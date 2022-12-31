@@ -22,6 +22,11 @@ export class CarService {
   isReady(): boolean {
     return this.ready;
   }
+
+  findCarForGroup(group: Group): Car|null {
+    return this.findCarWithSeats(group.people);
+  }
+
   addFreeCar(car) {
     this.cars[car.seats].push(car);
   }
@@ -34,4 +39,13 @@ export class CarService {
     }
   }
 
+  private findCarWithSeats(seats: number): Car|null {
+    if (this.cars[seats].length > 0) {
+      return this.cars[seats].pop();
+    }
+    if ((seats + 1) in this.cars) {
+      return this.findCarWithSeats(seats + 1);
+    }
+    return null;
+  }
 }
