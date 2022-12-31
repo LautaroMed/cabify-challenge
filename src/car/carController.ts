@@ -7,7 +7,7 @@ export class CarController {
   constructor(private readonly carService: CarService) {}
 
   @Put("/cars")
-  loadCars(@Body() body, @Res() response: Response): string {
+  loadCars(@Body() body, @Res() response: Response) {
     let cars = JSON.parse(body);
 
     if (cars === undefined) {
@@ -16,7 +16,5 @@ export class CarController {
       this.carService.loadCars(cars);
       response.sendStatus(200);
     }
-
-    return "";
   }
 }

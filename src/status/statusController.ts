@@ -7,12 +7,11 @@ export class StatusController {
   constructor(private readonly carService: CarService) {}
 
   @Get("/status")
-  getStatus(@Res() response: Response): string {
+  getStatus(@Res() response: Response) {
     if (this.carService.isReady()) {
       response.sendStatus(200)
     } else {
       response.sendStatus(401);
     }
-    return "";
   }
 }
