@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
-
-type Car = {
-  "id": number;
-  "seats": string;
-}
+import {Car, Group} from "../types";
 
 @Injectable()
 export class CarService {
