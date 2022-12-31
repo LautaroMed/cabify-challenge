@@ -1,4 +1,4 @@
-export type Car = {
+export type CarDTO = {
     "id": number;
     "seats": number;
 }

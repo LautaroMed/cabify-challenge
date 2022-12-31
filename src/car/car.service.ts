@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import {Car, Group} from "../types";
+import {CarDTO, Group} from "../types";
+import {Car} from "./model/Car";
 
 @Injectable()
 export class CarService {
@@ -10,10 +11,10 @@ export class CarService {
     this.clearCars();
   }
 
-  loadCars(cars: Car[]): string {
+  loadCars(cars: CarDTO[]): string {
     this.clearCars();
 
-    cars.forEach(car => this.addFreeCar(car));
+    cars.forEach(car => this.addFreeCar(new Car(car.id, car.seats)));
     this.ready = true;
 
     return 'OK';
@@ -28,7 +29,7 @@ export class CarService {
   }
 
   addFreeCar(car) {
-    this.cars[car.seats].push(car);
+    this.cars[car.getFreeSeats()].push(car);
   }
 
   private clearCars() {

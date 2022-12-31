@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {CarService} from "../car/car.service";
-import {Car, Group} from "../types";
+import {Group} from "../types";
+import {Car} from "../car/model/Car";
 
 @Injectable()
 export class GroupService {
@@ -18,13 +19,17 @@ export class GroupService {
       this.groupQueue.push(group);
     } else {
       this.travelingGroups[group.id] = car;
-      car.seats = car.seats - group.people;
-      this.carService.addFreeCar(car)
+      car.addGroup(group);
+      this.carService.addFreeCar(car);
     }
   }
 
   requestDropOff(groupId: number) {
     if (groupId in this.travelingGroups) {
+      const car: Car = this.travelingGroups[groupId];
+      delete this.travelingGroups[groupId];
+      car.dropGroup(groupId);
+      this.carService.addFreeCar(car);
     } else {
       const index = this.findGroupInQueue(groupId);
       if (index > -1) {
