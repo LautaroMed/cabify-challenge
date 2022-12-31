@@ -1,13 +1,22 @@
-import {Controller, Post} from '@nestjs/common';
+import {Body, Controller, Post, Res} from '@nestjs/common';
 import { GroupService } from './group.service';
+import {Response} from "express";
+import {Group} from "../types";
 
 @Controller()
 export class GroupController {
   constructor(private readonly groupService: GroupService) {}
 
   @Post("/journey")
-  requestJourney(): string {
-    return this.groupService.requestJourney();
+  requestJourney(@Body() body, @Res() response: Response) {
+    const group: Group = JSON.parse(body);
+
+    if (!group) {
+      response.sendStatus(400);
+    }
+
+    this.groupService.requestJourney(group);
+    response.sendStatus(200);
   }
 
   @Post("/dropoff")
