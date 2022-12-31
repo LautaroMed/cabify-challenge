@@ -25,7 +25,17 @@ export class GroupController {
   }
 
   @Post("/locate")
-  locate(): string {
-    return this.groupService.locate();
+  locate(@Body() body, @Res() response: Response): string {
+    const car = this.groupService.locate(body.id);
+
+    if (car === null) {
+      response.sendStatus(404);
+      return;
+    }
+    if (car === undefined) {
+      response.sendStatus(204);
+      return;
+    }
+    response.status(200).send(JSON.stringify(car))
   }
 }
