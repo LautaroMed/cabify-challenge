@@ -10,6 +10,10 @@ export class Car {
         this.groups = {};
     }
 
+    getId() {
+        return this.id;
+    }
+
     addGroup(group: Group) {
         this.groups[group.id] = group;
     }
@@ -19,7 +23,7 @@ export class Car {
     }
 
     getFreeSeats() {
-        return this.seats - Object.values(this.groups).reduce((prev, curr) => prev + curr, 0);
+        return this.seats - Object.values(this.groups).reduce((prev: number, curr: Group) => prev + curr.people, 0);
     }
 
     toString() {

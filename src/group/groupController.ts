@@ -8,9 +8,7 @@ export class GroupController {
   constructor(private readonly groupService: GroupService) {}
 
   @Post("/journey")
-  requestJourney(@Body() body, @Res() response: Response) {
-    const group: Group = JSON.parse(body);
-
+  requestJourney(@Body() group: Group, @Res() response: Response) {
     if (!group) {
       response.sendStatus(400);
     }
@@ -45,6 +43,6 @@ export class GroupController {
       response.sendStatus(204);
       return;
     }
-    response.status(200).send(JSON.stringify(car))
+    response.status(200).send(car.toString())
   }
 }

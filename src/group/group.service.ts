@@ -28,8 +28,10 @@ export class GroupService {
     if (groupId in this.travelingGroups) {
       const car: Car = this.travelingGroups[groupId];
       delete this.travelingGroups[groupId];
+      this.carService.removeCar(car);
       car.dropGroup(groupId);
       this.carService.addFreeCar(car);
+      return true;
     } else {
       const index = this.findGroupInQueue(groupId);
       if (index > -1) {

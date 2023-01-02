@@ -28,14 +28,18 @@ export class CarService {
     return this.findCarWithSeats(group.people);
   }
 
-  addFreeCar(car) {
+  addFreeCar(car: Car) {
     this.cars[car.getFreeSeats()].push(car);
+  }
+
+  removeCar(car: Car) {
+    this.cars[car.getFreeSeats()] = this.cars[car.getFreeSeats()].filter((nextCar: Car) => nextCar.getId() != car.getId());
   }
 
   private clearCars() {
     this.ready = false;
     this.cars = {};
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 0; i <= 6; i++) {
       this.cars[i] = [];
     }
   }
