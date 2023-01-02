@@ -15,7 +15,7 @@ export class GroupController {
     }
 
     this.groupService.requestJourney(group);
-    response.sendStatus(StatusCodes.OK);
+    response.status(StatusCodes.OK).send("");
   }
 
   @Post("/dropoff")
