@@ -20,7 +20,7 @@ export class GroupController {
 
   @Post("/dropoff")
   requestDropOff(@Body() body, @Res() response: Response): string {
-    if (!body.id) {
+    if (!body.ID) {
       response.sendStatus(StatusCodes.BAD_REQUEST);
       return;
     }
@@ -34,7 +34,11 @@ export class GroupController {
 
   @Post("/locate")
   locate(@Body() body, @Res() response: Response): string {
-    const car = this.groupService.locate(body.id);
+    if (!body.ID) {
+      response.sendStatus(StatusCodes.BAD_REQUEST);
+      return;
+    }
+    const car = this.groupService.locate(body.ID);
 
     if (car === null) {
       response.sendStatus(StatusCodes.NOT_FOUND);
