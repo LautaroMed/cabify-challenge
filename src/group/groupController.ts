@@ -29,7 +29,7 @@ export class GroupController {
       response.sendStatus(StatusCodes.NOT_FOUND);
       return;
     }
-    response.sendStatus(StatusCodes.OK);
+    response.status(StatusCodes.OK).send("");
   }
 
   @Post("/locate")
