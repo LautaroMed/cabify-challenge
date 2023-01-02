@@ -24,7 +24,7 @@ export class GroupController {
       response.sendStatus(StatusCodes.BAD_REQUEST);
       return;
     }
-    const result = this.groupService.requestDropOff(body.id);
+    const result = this.groupService.requestDropOff(body.ID);
     if (!result) {
       response.sendStatus(StatusCodes.NOT_FOUND);
       return;
