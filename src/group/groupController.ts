@@ -2,6 +2,7 @@ import {Body, Controller, Post, Res} from '@nestjs/common';
 import { GroupService } from './group.service';
 import {Response} from "express";
 import {Group} from "../types";
+import {StatusCodes} from "http-status-codes";
 
 @Controller()
 export class GroupController {
@@ -10,25 +11,25 @@ export class GroupController {
   @Post("/journey")
   requestJourney(@Body() group: Group, @Res() response: Response) {
     if (!group) {
-      response.sendStatus(400);
+      response.sendStatus(StatusCodes.BAD_REQUEST);
     }
 
     this.groupService.requestJourney(group);
-    response.sendStatus(200);
+    response.sendStatus(StatusCodes.OK);
   }
 
   @Post("/dropoff")
   requestDropOff(@Body() body, @Res() response: Response): string {
     if (!body.id) {
-      response.sendStatus(400);
+      response.sendStatus(StatusCodes.BAD_REQUEST);
       return;
     }
     const result = this.groupService.requestDropOff(body.id);
     if (!result) {
-      response.sendStatus(404);
+      response.sendStatus(StatusCodes.NOT_FOUND);
       return;
     }
-    response.sendStatus(200);
+    response.sendStatus(StatusCodes.OK);
   }
 
   @Post("/locate")
@@ -36,13 +37,13 @@ export class GroupController {
     const car = this.groupService.locate(body.id);
 
     if (car === null) {
-      response.sendStatus(404);
+      response.sendStatus(StatusCodes.NOT_FOUND);
       return;
     }
     if (car === undefined) {
-      response.sendStatus(204);
+      response.sendStatus(StatusCodes.NO_CONTENT);
       return;
     }
-    response.status(200).send(car.toString())
+    response.status(StatusCodes.OK).send(car.toString())
   }
 }
