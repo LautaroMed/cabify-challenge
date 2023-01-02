@@ -5,7 +5,6 @@ import {Car} from "./model/Car";
 @Injectable()
 export class CarService {
   private cars: Object;
-  private ready: boolean;
 
   constructor() {
     this.clearCars();
@@ -15,13 +14,8 @@ export class CarService {
     this.clearCars();
 
     cars.forEach(car => this.addFreeCar(new Car(car.id, car.seats)));
-    this.ready = true;
 
     return 'OK';
-  }
-
-  isReady(): boolean {
-    return this.ready;
   }
 
   findCarForGroup(group: Group): Car|null {
@@ -37,7 +31,6 @@ export class CarService {
   }
 
   private clearCars() {
-    this.ready = false;
     this.cars = {};
     for (let i = 0; i <= 6; i++) {
       this.cars[i] = [];
