@@ -11,7 +11,7 @@ export class StatusController {
     if (this.carService.isReady()) {
       response.sendStatus(200)
     } else {
-      response.sendStatus(401);
+      response.sendStatus(503);
     }
   }
 }
