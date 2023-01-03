@@ -46,7 +46,7 @@ export class GroupController {
       }
       response.status(StatusCodes.OK).send(car.toString())
     } catch (e) {
-      response.sendStatus(StatusCodes.NOT_FOUND);
+      response.status(StatusCodes.NOT_FOUND).send("");
     }
   }
 }
