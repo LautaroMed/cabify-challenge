@@ -55,7 +55,7 @@ export class GroupService {
 
   private findGroupInQueue(groupId: number) : number {
     for (let i = 0; i < this.groupQueue.length; i++) {
-      if (this.groupQueue[i].id === groupId) {
+      if (this.groupQueue[i].id == groupId) {
         return i;
       }
     }
