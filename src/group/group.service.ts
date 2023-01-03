@@ -41,24 +41,21 @@ export class GroupService {
     return null;
   }
 
-  // FIXME: throw exception when group is not found
   locate(groupId: number) {
     if (groupId in this.travelingGroups) {
       return this.travelingGroups[groupId];
     }
+
     const index = this.findGroupInQueue(groupId);
-    if (index > -1) {
-      return undefined;
-    }
     return null;
   }
 
   private findGroupInQueue(groupId: number) : number {
     for (let i = 0; i < this.groupQueue.length; i++) {
       if (this.groupQueue[i].id == groupId) {
-        return i;
+        return null;
       }
     }
-    return -1;
+    throw new Error();
   }
 }

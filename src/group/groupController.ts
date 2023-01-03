@@ -38,16 +38,15 @@ export class GroupController {
       response.sendStatus(StatusCodes.BAD_REQUEST);
       return;
     }
-    const car = this.groupService.locate(body.ID);
-
-    if (car === null) {
+    try {
+      const car = this.groupService.locate(body.ID);
+      if (car === null) {
+        response.sendStatus(StatusCodes.NO_CONTENT);
+        return;
+      }
+      response.status(StatusCodes.OK).send(car.toString())
+    } catch (e) {
       response.sendStatus(StatusCodes.NOT_FOUND);
-      return;
     }
-    if (car === undefined) {
-      response.sendStatus(StatusCodes.NO_CONTENT);
-      return;
-    }
-    response.status(StatusCodes.OK).send(car.toString())
   }
 }
