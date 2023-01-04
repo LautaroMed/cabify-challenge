@@ -5,10 +5,14 @@ import {Car} from "../car/model/Car";
 
 @Injectable()
 export class GroupService {
-  private readonly groupQueue: Group[];
-  private readonly travelingGroups: Object;
+  private groupQueue: Group[];
+  private travelingGroups: Object;
 
   constructor(private readonly carService: CarService) {
+    this.reset();
+  }
+
+  reset() {
     this.groupQueue = [];
     this.travelingGroups = [];
   }
