@@ -202,6 +202,12 @@ Gitlab.
 - The service should be as efficient as possible.
   It should be able to work reasonably well with at least $`10^4`$ / $`10^5`$ cars / waiting groups.
   Explain how you did achieve this requirement.
+
+  Cars are kept in a map separated by the capacity they have at the moment. Each capacity has its corresponding queue 
+  which we will use to get a car with n seats available in O(1). We also track which groups the car is taking and
+  which car is each group riding so we can access this data in O(1) for locate and dropoff. There's a (at most) O(n) 
+  step when the car needs to be moved from the current queue after updating the traveling groups. 
+
 - You are free to modify the repository as much as necessary to include or remove
   dependencies, subject to tooling limitations above.
 - Document your decisions using MRs or in this very README adding sections to it,
