@@ -19,7 +19,9 @@ export class Car {
     }
 
     dropGroup(groupId) {
+        const group = this.groups[groupId];
         delete this.groups[groupId];
+        return group;
     }
 
     getFreeSeats() {
