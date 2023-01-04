@@ -22,20 +22,23 @@ export class GroupService {
     if (!car) {
       this.groupQueue.push(group);
     } else {
-      this.travelingGroups[group.id] = car;
-      car.addGroup(group);
-      this.carService.addFreeCar(car);
+      this.addGroupToCar(group, car);
+      this.carService.refreshCar(car);
     }
   }
 
   requestDropOff(groupId: number) {
     if (groupId in this.travelingGroups) {
       const car: Car = this.travelingGroups[groupId];
-      delete this.travelingGroups[groupId];
-      this.carService.removeCar(car);
-      car.dropGroup(groupId);
-      this.carService.addFreeCar(car);
-      return true;
+
+      const group = this.removeGroupFromCar(groupId, car);
+      this.carService.refreshCar(car);
+
+      if (this.groupQueue.length) {
+        this.sendWaitingGroupOnReleasedCar(car);
+      }
+
+      return group;
     } else {
       const index = this.findGroupInQueue(groupId);
       if (index > -1) {
@@ -50,16 +53,36 @@ export class GroupService {
       return this.travelingGroups[groupId];
     }
 
-    const index = this.findGroupInQueue(groupId);
-    return null;
+    this.findGroupInQueue(groupId);
+    return null
   }
 
   private findGroupInQueue(groupId: number) : number {
     for (let i = 0; i < this.groupQueue.length; i++) {
       if (this.groupQueue[i].id == groupId) {
-        return null;
+        return i;
       }
     }
     throw new Error();
+  }
+
+  private addGroupToCar(group: Group, car: Car) {
+    this.travelingGroups[group.id] = car;
+    car.addGroup(group);
+  }
+
+  private removeGroupFromCar(groupId: number, car: Car) {
+    delete this.travelingGroups[groupId];
+    return car.dropGroup(groupId);
+  }
+
+  private sendWaitingGroupOnReleasedCar(car: Car) {
+    for (let i = 0; i < this.groupQueue.length; i++) {
+      if (this.groupQueue[i].people <= car.getFreeSeats()) {
+        const nextGroup = this.groupQueue.splice(i, 1)[0];
+        this.requestJourney(nextGroup);
+        break;
+      }
+    }
   }
 }

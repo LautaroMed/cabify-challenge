@@ -22,12 +22,9 @@ export class CarService {
     return this.findCarWithSeats(group.people);
   }
 
-  addFreeCar(car: Car) {
-    this.cars[car.getFreeSeats()].push(car);
-  }
-
-  removeCar(car: Car) {
-    this.cars[car.getFreeSeats()] = this.cars[car.getFreeSeats()].filter((nextCar: Car) => nextCar.getId() != car.getId());
+  refreshCar(car: Car) {
+    this.removeCar(car);
+    this.addFreeCar(car);
   }
 
   private clearCars() {
@@ -45,5 +42,13 @@ export class CarService {
       return this.findCarWithSeats(seats + 1);
     }
     return null;
+  }
+
+  private addFreeCar(car: Car) {
+    this.cars[car.getFreeSeats()].push(car);
+  }
+
+  private removeCar(car: Car) {
+    this.cars[car.getFreeSeats()] = this.cars[car.getFreeSeats()].filter((nextCar: Car) => nextCar.getId() != car.getId());
   }
 }
